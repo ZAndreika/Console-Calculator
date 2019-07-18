@@ -19,7 +19,7 @@ namespace ConsoleCalculator.Converters
                 Token newToken = new Token();
 
                 if (inputString[i] == '-' &&
-                    (i == 0 || inputString[i - 1] == '(' || OperationsManager.IsOperation(inputString[i - 1].ToString()) || inputString[i - 1] == ','))
+                    (i == 0 || inputString[i - 1] == '(' || OperationsManager.IsOperation(inputString[i - 1].ToString())))
                 {
                     newToken.Type = TOKEN_TYPE.UNARY_OPERATION;
                 }
@@ -81,11 +81,7 @@ namespace ConsoleCalculator.Converters
                     tmp = inputString[i++].ToString();
                 }
                 newToken.Value = tmp;
-
-                if (newToken.Value != ",") // for binary operations like pow(a,b)
-                {
-                    tokenExpression.Add(newToken);
-                }
+                tokenExpression.Add(newToken);
             }
 
             return tokenExpression;

@@ -8,7 +8,7 @@ namespace ConsoleCalculator
     {
         public static double CalculateExpression(List<Token> mathTokensExpression)
         {
-            Stack<Token> postfixExpresion = ExpressionCoverter.GetPostfixExpression(mathTokensExpression);
+            Stack<Token> postfixExpresion = ExpressionConverter.GetPostfixExpression(mathTokensExpression);
 
             Stack<Token> variablesStack = new Stack<Token>();
             while (postfixExpresion.Count > 0)
@@ -103,14 +103,14 @@ namespace ConsoleCalculator
                             }
                             case "/":
                             {
-                                if(secondDouble == 0)
+                                if (secondDouble == 0)
                                 {
                                     throw new Exception("Division by zero");
                                 }
                                 newVar.Value = (firstDouble / secondDouble).ToString();
                                 break;
                             }
-                            case "pow":
+                            case "^":
                             {
                                 newVar.Value = Math.Pow(firstDouble, secondDouble).ToString();
                                 break;

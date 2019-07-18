@@ -51,7 +51,7 @@ namespace Tests
         [TestMethod]
         public void TestHardCalculateExpression()
         {
-            // -sqrt(-4+5*pow(-2,2))*2.5
+            // -sqrt(-4+5*(-2)^2)*2.5
 
             List<Token> mathExpression = new List<Token>()
             {
@@ -63,12 +63,12 @@ namespace Tests
                 new Token(TOKEN_TYPE.BINARY_OPERATION, "+"),
                 new Token(TOKEN_TYPE.VARIABLE, "5"),
                 new Token(TOKEN_TYPE.BINARY_OPERATION, "*"),
-                new Token(TOKEN_TYPE.BINARY_OPERATION, "pow"),
                 new Token(TOKEN_TYPE.OPENING_BRACKET, "("),
                 new Token(TOKEN_TYPE.UNARY_OPERATION, "-"),
                 new Token(TOKEN_TYPE.VARIABLE, "2"),
-                new Token(TOKEN_TYPE.VARIABLE, "2"),
                 new Token(TOKEN_TYPE.CLOSING_BRACKET, ")"),
+                new Token(TOKEN_TYPE.BINARY_OPERATION, "^"),
+                new Token(TOKEN_TYPE.VARIABLE, "2"),
                 new Token(TOKEN_TYPE.CLOSING_BRACKET, ")"),
                 new Token(TOKEN_TYPE.BINARY_OPERATION, "*"),
                 new Token(TOKEN_TYPE.VARIABLE, "2,5")

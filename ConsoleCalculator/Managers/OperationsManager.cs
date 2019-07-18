@@ -13,8 +13,8 @@ namespace Calculator.Managers
             new Operation("-", PRIORITY.LOW),
             new Operation("*", PRIORITY.MEDIUM),
             new Operation("/", PRIORITY.MEDIUM),
-            new Operation("sqrt", PRIORITY.MEDIUM, OPERATION_TYPE.UNARY),
-            new Operation("pow", PRIORITY.HIGH)
+            new Operation("^", PRIORITY.HIGH),
+            new Operation("sqrt", PRIORITY.MEDIUM, OPERATION_TYPE.UNARY)
         };
 
         public static bool IsOperation(string symbol)

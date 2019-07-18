@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ConsoleCalculator.Converters
 {
-    public static class ExpressionCoverter
+    public static class ExpressionConverter
     {
         public static Stack<Token> GetPostfixExpression(List<Token> tokens)
         {
@@ -20,17 +20,6 @@ namespace ConsoleCalculator.Converters
                     case TOKEN_TYPE.VARIABLE:
                     {
                         postfixExpression.Push(currentToken);
-                        if (operationsStack.Count > 0)
-                        {
-                            while (operationsStack.Peek().Type == TOKEN_TYPE.UNARY_OPERATION)
-                            {
-                                postfixExpression.Push(operationsStack.Pop());
-                                if (operationsStack.Count == 0)
-                                {
-                                    break;
-                                }
-                            }
-                        }
                         break;
                     }
                     case TOKEN_TYPE.BINARY_OPERATION:
@@ -43,7 +32,8 @@ namespace ConsoleCalculator.Converters
                         {
                             operationsStack.Push(currentToken);
                         }
-                        else if (operationsStack.Peek().Type == TOKEN_TYPE.BINARY_OPERATION)
+                        else if (operationsStack.Peek().Type == TOKEN_TYPE.BINARY_OPERATION
+                            || operationsStack.Peek().Type == TOKEN_TYPE.UNARY_OPERATION)
                         {
                             Operation peekOp = OperationsManager.GetOperationBySymbol(operationsStack.Peek().Value);
                             Operation currentOp = OperationsManager.GetOperationBySymbol(currentToken.Value);
@@ -57,33 +47,17 @@ namespace ConsoleCalculator.Converters
                                 while (operationsStack.Peek().Type != TOKEN_TYPE.OPENING_BRACKET
                                     && currentOp.Priority <= peekOp.Priority)
                                 {
+                                    peekOp = OperationsManager.GetOperationBySymbol(operationsStack.Peek().Value);
+
                                     postfixExpression.Push(operationsStack.Pop());
                                     if (operationsStack.Count == 0)
                                     {
                                         break;
                                     }
-                                    peekOp = OperationsManager.GetOperationBySymbol(operationsStack.Peek().Value);
                                 }
 
                                 operationsStack.Push(currentToken);
                             }
-                        }
-                        else if (operationsStack.Peek().Type == TOKEN_TYPE.UNARY_OPERATION)
-                        {
-                            Operation peekOp = OperationsManager.GetOperationBySymbol(operationsStack.Peek().Value);
-                            Operation currentOp = OperationsManager.GetOperationBySymbol(currentToken.Value);
-
-                            while (operationsStack.Peek().Type == TOKEN_TYPE.UNARY_OPERATION
-                                && peekOp.Priority >= currentOp.Priority)
-                            {
-                                postfixExpression.Push(operationsStack.Pop());
-                                if (operationsStack.Count == 0)
-                                {
-                                    break;
-                                }
-                                peekOp = OperationsManager.GetOperationBySymbol(operationsStack.Peek().Value);
-                            }
-                            operationsStack.Push(currentToken);
                         }
 
                         break;

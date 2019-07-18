@@ -47,7 +47,7 @@ namespace Tests
         [TestMethod]
         public void TestHardConvertToTokensExpression()
         {
-            string entry = "-sqrt(-2-3*pow(-2,2))*4";
+            string entry = "-sqrt(-2-3*(-2)^2)*4";
             List<Token> expected = new List<Token>()
             {
                 new Token(TOKEN_TYPE.UNARY_OPERATION, "-"),
@@ -58,12 +58,12 @@ namespace Tests
                 new Token(TOKEN_TYPE.BINARY_OPERATION, "-"),
                 new Token(TOKEN_TYPE.VARIABLE, "3"),
                 new Token(TOKEN_TYPE.BINARY_OPERATION, "*"),
-                new Token(TOKEN_TYPE.BINARY_OPERATION, "pow"),
                 new Token(TOKEN_TYPE.OPENING_BRACKET, "("),
                 new Token(TOKEN_TYPE.UNARY_OPERATION, "-"),
                 new Token(TOKEN_TYPE.VARIABLE, "2"),
-                new Token(TOKEN_TYPE.VARIABLE, "2"),
                 new Token(TOKEN_TYPE.CLOSING_BRACKET, ")"),
+                new Token(TOKEN_TYPE.BINARY_OPERATION, "^"),
+                new Token(TOKEN_TYPE.VARIABLE, "2"),
                 new Token(TOKEN_TYPE.CLOSING_BRACKET, ")"),
                 new Token(TOKEN_TYPE.BINARY_OPERATION, "*"),
                 new Token(TOKEN_TYPE.VARIABLE, "4")
