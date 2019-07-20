@@ -1,4 +1,5 @@
 ﻿using ConsoleCalculator.Converters;
+using ConsoleCalculator.DataTypes;
 using System;
 using System.Collections.Generic;
 

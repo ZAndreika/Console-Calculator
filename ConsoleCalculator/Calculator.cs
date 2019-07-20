@@ -1,5 +1,6 @@
 ﻿using ConsoleCalculator.Converters;
 using ConsoleCalculator.Managers;
+using ConsoleCalculator.DataTypes;
 using System;
 using System.Collections.Generic;
 
@@ -266,7 +267,7 @@ namespace ConsoleCalculator
                                 throw new Exception("Undefined binary operator");
                             }
                         }
-                        
+
                         variablesStack.Push(newVar);
                         break;
                     }

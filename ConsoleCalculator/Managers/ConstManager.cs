@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ConsoleCalculator.DataTypes;
 
 namespace ConsoleCalculator.Managers
 {
@@ -13,7 +12,6 @@ namespace ConsoleCalculator.Managers
             new Const("pi", Math.PI),
             new Const("e", Math.E)
         };
-
         public static bool IsConst(string symbol)
         {
             Const operation = Constants.FirstOrDefault(op => op.Symbol == symbol);
@@ -23,7 +21,6 @@ namespace ConsoleCalculator.Managers
             }
             return true;
         }
-
         public static Const GetConstByToken(Token token)
         {
             Const constant = Constants.FirstOrDefault(x => x.Symbol == token.Value);
