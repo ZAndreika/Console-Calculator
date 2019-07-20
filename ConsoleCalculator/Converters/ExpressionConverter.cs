@@ -1,6 +1,5 @@
 ﻿using Calculator.Managers;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ConsoleCalculator.Converters
 {
@@ -32,11 +31,10 @@ namespace ConsoleCalculator.Converters
                         {
                             operationsStack.Push(currentToken);
                         }
-                        else if (operationsStack.Peek().Type == TOKEN_TYPE.BINARY_OPERATION
-                            || operationsStack.Peek().Type == TOKEN_TYPE.UNARY_OPERATION)
+                        else
                         {
-                            Operation peekOp = OperationsManager.GetOperationBySymbol(operationsStack.Peek().Value);
-                            Operation currentOp = OperationsManager.GetOperationBySymbol(currentToken.Value);
+                            Operation peekOp = OperationsManager.GetOperationByToken(operationsStack.Peek());
+                            Operation currentOp = OperationsManager.GetOperationByToken(currentToken);
 
                             if (currentOp.Priority > peekOp.Priority)
                             {
@@ -47,13 +45,12 @@ namespace ConsoleCalculator.Converters
                                 while (operationsStack.Peek().Type != TOKEN_TYPE.OPENING_BRACKET
                                     && currentOp.Priority <= peekOp.Priority)
                                 {
-                                    peekOp = OperationsManager.GetOperationBySymbol(operationsStack.Peek().Value);
-
                                     postfixExpression.Push(operationsStack.Pop());
-                                    if (operationsStack.Count == 0)
+                                    if (operationsStack.Count == 0 || operationsStack.Peek().Type == TOKEN_TYPE.OPENING_BRACKET)
                                     {
                                         break;
                                     }
+                                    peekOp = OperationsManager.GetOperationByToken(operationsStack.Peek());
                                 }
 
                                 operationsStack.Push(currentToken);

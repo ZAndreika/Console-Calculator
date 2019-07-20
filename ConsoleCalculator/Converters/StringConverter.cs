@@ -18,7 +18,7 @@ namespace ConsoleCalculator.Converters
                 string tmp = "";
                 Token newToken = new Token();
 
-                if (inputString[i] == '-' &&
+                if ((inputString[i] == '-' || inputString[i] == '+') &&
                     (i == 0 || inputString[i - 1] == '(' || OperationsManager.IsOperation(inputString[i - 1].ToString())))
                 {
                     newToken.Type = TOKEN_TYPE.UNARY_OPERATION;
@@ -76,9 +76,31 @@ namespace ConsoleCalculator.Converters
                         throw;
                     }
                 }
+                else if (inputString[i] == '(' || inputString[i] == ')')
+                {
+                    tmp = inputString[i++].ToString();
+                }
                 else
                 {
                     tmp = inputString[i++].ToString();
+                    string checkOp = tmp;
+                    if (i != inputString.Length)
+                    {
+                        checkOp += inputString[i];
+                    }
+                    if (OperationsManager.IsBitOperation(checkOp)
+                        || OperationsManager.IsLogicOperation(checkOp)
+                        || OperationsManager.IsEqualOperation(checkOp))
+                    {
+                        tmp = checkOp;
+                        i++;
+                    }
+
+                    if (OperationsManager.IsUnaryOperation(tmp))
+                    {
+                        newToken.Type = TOKEN_TYPE.UNARY_OPERATION;
+                    }
+
                 }
                 newToken.Value = tmp;
                 tokenExpression.Add(newToken);

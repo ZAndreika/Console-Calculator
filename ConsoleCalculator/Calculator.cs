@@ -10,6 +10,11 @@ namespace ConsoleCalculator
         {
             Stack<Token> postfixExpresion = ExpressionConverter.GetPostfixExpression(mathTokensExpression);
 
+            foreach (var item in postfixExpresion)
+            {
+                Console.WriteLine(item.Value + " " + item.Type);
+            }
+
             Stack<Token> variablesStack = new Stack<Token>();
             while (postfixExpresion.Count > 0)
             {
@@ -39,6 +44,11 @@ namespace ConsoleCalculator
                                 variablesStack.Push(variable);
                                 break;
                             }
+                            case "+":
+                            {
+                                variablesStack.Push(variable);
+                                break;
+                            }
                             case "sqrt":
                             {
                                 double var = double.Parse(variable.Value);
@@ -50,6 +60,32 @@ namespace ConsoleCalculator
 
                                 variable.Value = var.ToString();
 
+                                variablesStack.Push(variable);
+                                break;
+                            }
+                            case "not":
+                            {
+                                double var = double.Parse(variable.Value);
+                                if(var != 0 && var != 1)
+                                {
+                                    throw new Exception("No boolean operand for \"!\"");
+                                }
+                                var = var == 0 ?  1 :  0;
+                                variable.Value = var.ToString();
+                                variablesStack.Push(variable);
+
+                                break;
+                            }
+                            case "!":
+                            {
+                                double n = double.Parse(variable.Value);
+                                double var = 1;
+
+                                for(int i = 2; i <= n; i++)
+                                {
+                                    var *= i;
+                                }
+                                variable.Value = var.ToString();
                                 variablesStack.Push(variable);
                                 break;
                             }
@@ -110,9 +146,91 @@ namespace ConsoleCalculator
                                 newVar.Value = (firstDouble / secondDouble).ToString();
                                 break;
                             }
+                            case "%":
+                            {
+                                newVar.Value = (firstDouble % secondDouble).ToString();
+                                break;
+                            }
                             case "^":
                             {
                                 newVar.Value = Math.Pow(firstDouble, secondDouble).ToString();
+                                break;
+                            }
+                            case "and":
+                            {
+                                newVar.Value = ((int)secondDouble & (int)firstDouble).ToString();
+                                break;
+                            }
+                            case "or":
+                            {
+                                newVar.Value = ((int)secondDouble | (int)firstDouble).ToString();
+                                break;
+                            }
+                            case "xor":
+                            {
+                                newVar.Value = ((int)secondDouble ^ (int)firstDouble).ToString();
+                                break;
+                            }
+                            case ">>":
+                            {
+                                newVar.Value = ((int)firstDouble >> (int)secondDouble).ToString();
+                                break;
+                            }
+                            case "<<":
+                            {
+                                newVar.Value = ((int)firstDouble << (int)secondDouble).ToString();
+                                break;
+                            }
+                            case "||":
+                            {
+                                if((firstDouble != 0 && firstDouble != 1) || (secondDouble != 0 && secondDouble != 1))
+                                {
+                                    throw new Exception("No boolean operands for \"||\"");
+                                }
+                                bool firstBool = firstDouble == 0 ? false : true;
+                                bool secondBool = secondDouble == 0 ? false : true;
+                                newVar.Value = (firstBool || secondBool == true ? 1 : 0).ToString();
+                                break;
+                            }
+                            case "&&":
+                            {
+                                if (firstDouble != 0 && firstDouble != 1 || secondDouble != 0 && secondDouble != 1)
+                                {
+                                    throw new Exception("No boolean operands for \"||\"");
+                                }
+                                bool firstBool = firstDouble == 0 ? false : true;
+                                bool secondBool = secondDouble == 0 ? false : true;
+                                newVar.Value = (firstBool && secondBool == true ? 1 : 0).ToString();
+                                break;
+                            }
+                            case ">":
+                            {
+                                newVar.Value = (firstDouble > secondDouble ? 1 : 0).ToString();
+                                break;
+                            }
+                            case ">=":
+                            {
+                                newVar.Value = (firstDouble >= secondDouble ? 1 : 0).ToString();
+                                break;
+                            }
+                            case "<":
+                            {
+                                newVar.Value = (firstDouble < secondDouble ? 1 : 0).ToString();
+                                break;
+                            }
+                            case "<=":
+                            {
+                                newVar.Value = (firstDouble <= secondDouble ? 1 : 0).ToString();
+                                break;
+                            }
+                            case "==":
+                            {
+                                newVar.Value = (firstDouble == secondDouble ? 1 : 0).ToString();
+                                break;
+                            }
+                            case "!=":
+                            {
+                                newVar.Value = (firstDouble != secondDouble ? 1 : 0).ToString();
                                 break;
                             }
                             default:
