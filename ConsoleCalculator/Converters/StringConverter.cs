@@ -1,4 +1,4 @@
-﻿using Calculator.Managers;
+﻿using ConsoleCalculator.Managers;
 using System;
 using System.Collections.Generic;
 
@@ -61,16 +61,30 @@ namespace ConsoleCalculator.Converters
                             break;
                         }
                     }
-                    try
+
+                    if (OperationsManager.IsOperation(tmp))
                     {
-                        if (OperationsManager.IsUnaryOperation(tmp))
+                        newToken.Type = TOKEN_TYPE.BINARY_OPERATION;
+
+                        try
                         {
-                            newToken.Type = TOKEN_TYPE.UNARY_OPERATION;
+                            if (OperationsManager.IsUnaryOperation(tmp))
+                            {
+                                newToken.Type = TOKEN_TYPE.UNARY_OPERATION;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            throw;
                         }
                     }
-                    catch (Exception)
+                    else if(ConstManager.IsConst(tmp))
                     {
-                        throw;
+                        newToken.Type = TOKEN_TYPE.CONST;
+                    }
+                    else
+                    {
+                        throw new Exception("Undefined operation or constant \"" + tmp + "\"");
                     }
                 }
                 else

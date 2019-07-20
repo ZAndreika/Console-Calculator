@@ -1,4 +1,4 @@
-﻿using Calculator.Managers;
+﻿using ConsoleCalculator.Managers;
 using System.Collections.Generic;
 
 namespace ConsoleCalculator.Converters
@@ -17,6 +17,7 @@ namespace ConsoleCalculator.Converters
                 switch (currentToken.Type)
                 {
                     case TOKEN_TYPE.VARIABLE:
+                    case TOKEN_TYPE.CONST:
                     {
                         postfixExpression.Push(currentToken);
                         break;
