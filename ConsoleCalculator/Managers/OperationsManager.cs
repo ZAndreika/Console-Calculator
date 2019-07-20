@@ -1,9 +1,8 @@
-﻿using ConsoleCalculator;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Calculator.Managers
+namespace ConsoleCalculator.Managers
 {
     public static class OperationsManager
     {
@@ -17,6 +16,11 @@ namespace Calculator.Managers
             new Operation("^", PRIORITY.ARITH_HIGH),
             new Operation("sqrt", PRIORITY.ARITH_HIGH, OPERATION_TYPE.UNARY),
             new Operation("!", PRIORITY.ARITH_HIGH, OPERATION_TYPE.UNARY),
+            new Operation("sin", PRIORITY.ARITH_HIGH, OPERATION_TYPE.UNARY),
+            new Operation("cos", PRIORITY.ARITH_HIGH, OPERATION_TYPE.UNARY),
+            new Operation("tg", PRIORITY.ARITH_HIGH, OPERATION_TYPE.UNARY),
+            new Operation("ctg", PRIORITY.ARITH_HIGH, OPERATION_TYPE.UNARY),
+            new Operation("log", PRIORITY.ARITH_HIGH, OPERATION_TYPE.UNARY),
 
             new Operation("||", PRIORITY.LOGIC_LOW),
             new Operation("&&", PRIORITY.LOGIC_MEDIUM),

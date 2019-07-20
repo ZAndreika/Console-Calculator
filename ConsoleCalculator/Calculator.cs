@@ -1,4 +1,5 @@
 ﻿using ConsoleCalculator.Converters;
+using ConsoleCalculator.Managers;
 using System;
 using System.Collections.Generic;
 
@@ -21,10 +22,25 @@ namespace ConsoleCalculator
                         variablesStack.Push(token);
                         break;
                     }
+                    case TOKEN_TYPE.CONST:
+                    {
+                        token.Value = ConstManager.GetConstByToken(token).Value.ToString();
+                        variablesStack.Push(token);
+                        break;
+                    }
                     case TOKEN_TYPE.UNARY_OPERATION:
                     {
-                        Token variable = variablesStack.Pop();
-                        double var = double.Parse(variable.Value);
+                        Token variable;
+                        double var;
+                        try
+                        {
+                            variable = variablesStack.Pop();
+                            var = double.Parse(variable.Value);
+                        }
+                        catch (Exception)
+                        {
+                            throw new Exception("Bad expression");
+                        }
 
                         switch (token.Value)
                         {
@@ -68,6 +84,31 @@ namespace ConsoleCalculator
                                 }
                                 break;
                             }
+                            case "sin":
+                            {
+                                var = Math.Sin(var);
+                                break;
+                            }
+                            case "cos":
+                            {
+                                var = Math.Cos(var);
+                                break;
+                            }
+                            case "tg":
+                            {
+                                var = Math.Tan(var);
+                                break;
+                            }
+                            case "ctg":
+                            {
+                                var = Math.Cos(var) / Math.Sin(var);
+                                break;
+                            }
+                            case "log":
+                            {
+                                var = Math.Log(var);
+                                break;
+                            }
                             default:
                             {
                                 throw new Exception("Undefined unary operator");
@@ -80,10 +121,15 @@ namespace ConsoleCalculator
                     }
                     case TOKEN_TYPE.BINARY_OPERATION:
                     {
-                        Token secondVar = variablesStack.Pop();
-                        Token firstVar = variablesStack.Pop();
+                        Token secondVar;
+                        Token firstVar;
 
-                        if (firstVar.Type != TOKEN_TYPE.VARIABLE || firstVar.Type != secondVar.Type)
+                        try
+                        {
+                            secondVar = variablesStack.Pop();
+                            firstVar = variablesStack.Pop();
+                        }
+                        catch (Exception)
                         {
                             throw new Exception("Bad expression");
                         }
@@ -220,7 +266,7 @@ namespace ConsoleCalculator
                                 throw new Exception("Undefined binary operator");
                             }
                         }
-
+                        
                         variablesStack.Push(newVar);
                         break;
                     }

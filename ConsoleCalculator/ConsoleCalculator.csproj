@@ -44,8 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculator.cs" />
+    <Compile Include="Const.cs" />
     <Compile Include="Converters\ExpressionConverter.cs" />
     <Compile Include="Converters\StringConverter.cs" />
+    <Compile Include="Managers\ConstManager.cs" />
     <Compile Include="Managers\OperationsManager.cs" />
     <Compile Include="Operation.cs" />
     <Compile Include="Program.cs" />
