@@ -51,7 +51,7 @@ namespace Calculator.Managers
             Operation operation = Operations.Find(op => op.Symbol == symbol);
             if (operation == null)
             {
-                throw new Exception("no such operation \"" + symbol + "\"");
+                throw new Exception("Undefined operation \"" + symbol + "\"");
             }
             if (operation.Type == OPERATION_TYPE.UNARY)
             {
@@ -113,10 +113,10 @@ namespace Calculator.Managers
             Operation operation = Operations.FirstOrDefault(x => x.Symbol == token.Value);
             if (operation == null)
             {
-                throw new Exception("no such operation \"" + token.Value + "\"");
+                throw new Exception("Undefined operation \"" + token.Value + "\"");
             }
 
-            if (token.Type == TOKEN_TYPE.UNARY_OPERATION && operation.Symbol == "-") // change priority for unary minus
+            if (token.Type == TOKEN_TYPE.UNARY_OPERATION && (operation.Symbol == "-" || operation.Symbol == "+")) // change priority for unary minus/plus
             {
                 operation = new Operation(operation.Symbol, PRIORITY.ARITH_HIGH, OPERATION_TYPE.UNARY);
             }

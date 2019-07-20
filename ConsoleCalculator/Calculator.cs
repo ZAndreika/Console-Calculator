@@ -41,7 +41,7 @@ namespace ConsoleCalculator
                             {
                                 if (var < 0)
                                 {
-                                    throw new Exception("sqrt from negative number");
+                                    throw new Exception("Do not extract the sqrt of a negative number");
                                 }
                                 var = Math.Sqrt(var);
 
@@ -51,7 +51,7 @@ namespace ConsoleCalculator
                             {
                                 if (var != 0 && var != 1)
                                 {
-                                    throw new Exception("No boolean operand for \"!\"");
+                                    throw new Exception("Not boolean operand for \"" + token.Value + "\"");
                                 }
                                 var = var == 0 ? 1 : 0;
 
@@ -123,7 +123,7 @@ namespace ConsoleCalculator
                             {
                                 if (secondDouble == 0)
                                 {
-                                    throw new Exception("Division by zero");
+                                    throw new Exception("Сannot be divided by zero");
                                 }
                                 newVar.Value = (firstDouble / secondDouble).ToString();
                                 break;
@@ -167,7 +167,7 @@ namespace ConsoleCalculator
                             {
                                 if ((firstDouble != 0 && firstDouble != 1) || (secondDouble != 0 && secondDouble != 1))
                                 {
-                                    throw new Exception("No boolean operands for \"||\"");
+                                    throw new Exception("Not boolean operands for \"||\"");
                                 }
                                 bool firstBool = firstDouble == 0 ? false : true;
                                 bool secondBool = secondDouble == 0 ? false : true;
@@ -178,7 +178,7 @@ namespace ConsoleCalculator
                             {
                                 if (firstDouble != 0 && firstDouble != 1 || secondDouble != 0 && secondDouble != 1)
                                 {
-                                    throw new Exception("No boolean operands for \"||\"");
+                                    throw new Exception("No boolean operands for \"" + token.Value + "\"");
                                 }
                                 bool firstBool = firstDouble == 0 ? false : true;
                                 bool secondBool = secondDouble == 0 ? false : true;
