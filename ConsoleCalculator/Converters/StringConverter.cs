@@ -1,4 +1,5 @@
-﻿using Calculator.Managers;
+﻿using ConsoleCalculator.Managers;
+using ConsoleCalculator.DataTypes;
 using System;
 using System.Collections.Generic;
 
@@ -8,7 +9,7 @@ namespace ConsoleCalculator.Converters
     {
         public static List<Token> ConvertToTokensExpression(string inputString)
         {
-            inputString = inputString.Replace(" ", "").ToLower();
+            inputString = inputString.Replace(" ", "").ToLower(); // remove spaces
 
             List<Token> tokenExpression = new List<Token>();
 
@@ -18,7 +19,7 @@ namespace ConsoleCalculator.Converters
                 string tmp = "";
                 Token newToken = new Token();
 
-                if (inputString[i] == '-' &&
+                if ((inputString[i] == '-' || inputString[i] == '+') &&
                     (i == 0 || inputString[i - 1] == '(' || OperationsManager.IsOperation(inputString[i - 1].ToString())))
                 {
                     newToken.Type = TOKEN_TYPE.UNARY_OPERATION;
@@ -27,16 +28,18 @@ namespace ConsoleCalculator.Converters
                 if (inputString[i] == '(')
                 {
                     newToken.Type = TOKEN_TYPE.OPENING_BRACKET;
+                    tmp = inputString[i++].ToString();
                 }
                 else if (inputString[i] == ')')
                 {
                     newToken.Type = TOKEN_TYPE.CLOSING_BRACKET;
+                    tmp = inputString[i++].ToString();
                 }
-
-                if (char.IsDigit(inputString[i]))
+                else if (char.IsDigit(inputString[i]))
                 {
                     newToken.Type = TOKEN_TYPE.VARIABLE;
-                    while (char.IsDigit(inputString[i]) || inputString[i] == '.')
+                    while (i != inputString.Length &&
+                        (char.IsDigit(inputString[i]) || inputString[i] == '.' || inputString[i] == ','))
                     {
                         if (inputString[i] == '.')
                         {
@@ -46,11 +49,6 @@ namespace ConsoleCalculator.Converters
                         else
                         {
                             tmp += inputString[i++];
-                        }
-
-                        if (i == inputString.Length)
-                        {
-                            break;
                         }
                     }
                 }
@@ -64,21 +62,52 @@ namespace ConsoleCalculator.Converters
                             break;
                         }
                     }
-                    try
+
+                    if (OperationsManager.IsOperation(tmp))
                     {
-                        if (OperationsManager.IsUnaryOperation(tmp))
+                        newToken.Type = TOKEN_TYPE.BINARY_OPERATION;
+
+                        try
                         {
-                            newToken.Type = TOKEN_TYPE.UNARY_OPERATION;
+                            if (OperationsManager.IsUnaryOperation(tmp))
+                            {
+                                newToken.Type = TOKEN_TYPE.UNARY_OPERATION;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            throw;
                         }
                     }
-                    catch (Exception)
+                    else if (ConstManager.IsConst(tmp))
                     {
-                        throw;
+                        newToken.Type = TOKEN_TYPE.CONST;
+                    }
+                    else
+                    {
+                        throw new Exception("Undefined operation or constant \"" + tmp + "\"");
                     }
                 }
                 else
                 {
                     tmp = inputString[i++].ToString();
+                    string checkOp = tmp;
+                    if (i != inputString.Length)
+                    {
+                        checkOp += inputString[i];
+                    }
+                    if (OperationsManager.IsBitOperation(checkOp)
+                        || OperationsManager.IsLogicOperation(checkOp)
+                        || OperationsManager.IsCompareOperation(checkOp))
+                    {
+                        tmp = checkOp;
+                        i++;
+                    }
+
+                    if (OperationsManager.IsUnaryOperation(tmp))
+                    {
+                        newToken.Type = TOKEN_TYPE.UNARY_OPERATION;
+                    }
                 }
                 newToken.Value = tmp;
                 tokenExpression.Add(newToken);
@@ -86,6 +115,5 @@ namespace ConsoleCalculator.Converters
 
             return tokenExpression;
         }
-
     }
 }
