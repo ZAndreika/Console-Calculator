@@ -12,6 +12,11 @@
 - `+`
 - `!` - factorial
 - `sqrt`
+- `sin`
+- `cos`
+- `tg`
+- `ctg`
+- `log`
 
 ##### Binary
 - `+`
@@ -43,3 +48,7 @@
 - `>=`
 - `<`
 - `<=`
+
+### Math Constants
+- `pi`
+- `e`

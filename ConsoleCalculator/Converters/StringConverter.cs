@@ -1,4 +1,5 @@
 ﻿using ConsoleCalculator.Managers;
+using ConsoleCalculator.DataTypes;
 using System;
 using System.Collections.Generic;
 
@@ -78,7 +79,7 @@ namespace ConsoleCalculator.Converters
                             throw;
                         }
                     }
-                    else if(ConstManager.IsConst(tmp))
+                    else if (ConstManager.IsConst(tmp))
                     {
                         newToken.Type = TOKEN_TYPE.CONST;
                     }
@@ -107,7 +108,6 @@ namespace ConsoleCalculator.Converters
                     {
                         newToken.Type = TOKEN_TYPE.UNARY_OPERATION;
                     }
-
                 }
                 newToken.Value = tmp;
                 tokenExpression.Add(newToken);
@@ -115,6 +115,5 @@ namespace ConsoleCalculator.Converters
 
             return tokenExpression;
         }
-
     }
 }

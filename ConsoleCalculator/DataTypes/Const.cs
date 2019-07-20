@@ -1,4 +1,4 @@
-﻿namespace ConsoleCalculator
+﻿namespace ConsoleCalculator.DataTypes
 {
     public class Const
     {

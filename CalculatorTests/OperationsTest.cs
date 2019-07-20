@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ConsoleCalculator.Converters;
-using ConsoleCalculator;
+using ConsoleCalculator.DataTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests

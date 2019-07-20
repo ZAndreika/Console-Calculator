@@ -54,6 +54,7 @@
     <Compile Include="ExpressionConverterTest.cs" />
     <Compile Include="CalculatorTest.cs" />
     <Compile Include="OperationsTest.cs" />
+    <Compile Include="PerformanceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ConsoleCalculator;
+using ConsoleCalculator.DataTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests

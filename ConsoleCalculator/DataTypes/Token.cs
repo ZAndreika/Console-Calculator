@@ -1,4 +1,4 @@
-﻿namespace ConsoleCalculator
+﻿namespace ConsoleCalculator.DataTypes
 {
     public enum TOKEN_TYPE { VARIABLE, CONST, BINARY_OPERATION, UNARY_OPERATION, OPENING_BRACKET, CLOSING_BRACKET };
     public class Token
@@ -9,7 +9,6 @@
         {
             Type = TOKEN_TYPE.BINARY_OPERATION;
         }
-
         public Token(TOKEN_TYPE Type, string Value)
         {
             this.Type = Type;

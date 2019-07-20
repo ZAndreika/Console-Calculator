@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ConsoleCalculator.DataTypes;
 
 namespace ConsoleCalculator.Managers
 {
@@ -39,7 +40,6 @@ namespace ConsoleCalculator.Managers
             new Operation("<", PRIORITY.COMPARE_MEDIUM),
             new Operation("<=", PRIORITY.COMPARE_MEDIUM),
         };
-
         public static bool IsOperation(string symbol)
         {
             Operation operation = Operations.FirstOrDefault(op => op.Symbol == symbol);
@@ -49,7 +49,6 @@ namespace ConsoleCalculator.Managers
             }
             return true;
         }
-
         public static bool IsUnaryOperation(string symbol)
         {
             Operation operation = Operations.Find(op => op.Symbol == symbol);
@@ -63,7 +62,6 @@ namespace ConsoleCalculator.Managers
             }
             return false;
         }
-
         public static bool IsLogicOperation(string symbol)
         {
             Operation operation = Operations.Find(op => op.Symbol == symbol);
@@ -79,7 +77,6 @@ namespace ConsoleCalculator.Managers
             }
             return false;
         }
-
         public static bool IsBitOperation(string symbol)
         {
             Operation operation = Operations.Find(op => op.Symbol == symbol);
@@ -96,7 +93,6 @@ namespace ConsoleCalculator.Managers
             }
             return false;
         }
-
         public static bool IsCompareOperation(string symbol)
         {
             Operation operation = Operations.Find(op => op.Symbol == symbol);
@@ -111,7 +107,6 @@ namespace ConsoleCalculator.Managers
             }
             return false;
         }
-
         public static Operation GetOperationByToken(Token token)
         {
             Operation operation = Operations.FirstOrDefault(x => x.Symbol == token.Value);

@@ -1,4 +1,5 @@
 ﻿using ConsoleCalculator.Managers;
+using ConsoleCalculator.DataTypes;
 using System.Collections.Generic;
 
 namespace ConsoleCalculator.Converters
@@ -57,7 +58,6 @@ namespace ConsoleCalculator.Converters
                                 operationsStack.Push(currentToken);
                             }
                         }
-
                         break;
                     }
                     case TOKEN_TYPE.UNARY_OPERATION:
