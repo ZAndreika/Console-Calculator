@@ -75,7 +75,7 @@ namespace ConsoleCalculator.Converters
                         {
                             postfixExpression.Push(operationsStack.Pop());
                         }
-                        operationsStack.Pop();
+                        operationsStack.Pop(); // remove opening bracket from operations stack
                         break;
                     }
                     default:

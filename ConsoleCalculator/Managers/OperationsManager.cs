@@ -22,18 +22,18 @@ namespace Calculator.Managers
             new Operation("&&", PRIORITY.LOGIC_MEDIUM),
             new Operation("not", PRIORITY.LOGIC_HIGH, OPERATION_TYPE.UNARY),
 
-            new Operation("and", PRIORITY.BIT_MEDIUM),
-            new Operation("xor", PRIORITY.BIT_LOW),
             new Operation("or", PRIORITY.BIT_LOWEST),
+            new Operation("xor", PRIORITY.BIT_LOW),
+            new Operation("and", PRIORITY.BIT_MEDIUM),
             new Operation("<<", PRIORITY.BIT_HIGH),
             new Operation(">>", PRIORITY.BIT_HIGH),
 
-            new Operation("==", PRIORITY.EQUAL_LOW),
-            new Operation("!=", PRIORITY.EQUAL_LOW),
-            new Operation(">", PRIORITY.EQUAL_MEDIUM),
-            new Operation(">=", PRIORITY.EQUAL_MEDIUM),
-            new Operation("<", PRIORITY.EQUAL_MEDIUM),
-            new Operation("<=", PRIORITY.EQUAL_MEDIUM),
+            new Operation("==", PRIORITY.COMPARE_LOW),
+            new Operation("!=", PRIORITY.COMPARE_LOW),
+            new Operation(">", PRIORITY.COMPARE_MEDIUM),
+            new Operation(">=", PRIORITY.COMPARE_MEDIUM),
+            new Operation("<", PRIORITY.COMPARE_MEDIUM),
+            new Operation("<=", PRIORITY.COMPARE_MEDIUM),
         };
 
         public static bool IsOperation(string symbol)
@@ -67,7 +67,7 @@ namespace Calculator.Managers
             {
                 return false;
             }
-            if (operation.Priority == PRIORITY.LOGIC_LOW 
+            if (operation.Priority == PRIORITY.LOGIC_LOW
                 || operation.Priority == PRIORITY.LOGIC_MEDIUM
                 || operation.Priority == PRIORITY.LOGIC_HIGH)
             {
@@ -93,15 +93,15 @@ namespace Calculator.Managers
             return false;
         }
 
-        public static bool IsEqualOperation(string symbol)
+        public static bool IsCompareOperation(string symbol)
         {
             Operation operation = Operations.Find(op => op.Symbol == symbol);
             if (operation == null)
             {
                 return false;
             }
-            if (operation.Priority == PRIORITY.EQUAL_LOW
-                || operation.Priority == PRIORITY.EQUAL_MEDIUM)
+            if (operation.Priority == PRIORITY.COMPARE_LOW
+                || operation.Priority == PRIORITY.COMPARE_MEDIUM)
             {
                 return true;
             }

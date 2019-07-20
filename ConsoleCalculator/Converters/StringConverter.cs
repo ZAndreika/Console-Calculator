@@ -8,7 +8,7 @@ namespace ConsoleCalculator.Converters
     {
         public static List<Token> ConvertToTokensExpression(string inputString)
         {
-            inputString = inputString.Replace(" ", "").ToLower();
+            inputString = inputString.Replace(" ", "").ToLower(); // remove spaces
 
             List<Token> tokenExpression = new List<Token>();
 
@@ -27,16 +27,18 @@ namespace ConsoleCalculator.Converters
                 if (inputString[i] == '(')
                 {
                     newToken.Type = TOKEN_TYPE.OPENING_BRACKET;
+                    tmp = inputString[i++].ToString();
                 }
                 else if (inputString[i] == ')')
                 {
                     newToken.Type = TOKEN_TYPE.CLOSING_BRACKET;
+                    tmp = inputString[i++].ToString();
                 }
-
-                if (char.IsDigit(inputString[i]))
+                else if (char.IsDigit(inputString[i]))
                 {
                     newToken.Type = TOKEN_TYPE.VARIABLE;
-                    while (char.IsDigit(inputString[i]) || inputString[i] == '.')
+                    while (i != inputString.Length &&
+                        (char.IsDigit(inputString[i]) || inputString[i] == '.' || inputString[i] == ','))
                     {
                         if (inputString[i] == '.')
                         {
@@ -46,11 +48,6 @@ namespace ConsoleCalculator.Converters
                         else
                         {
                             tmp += inputString[i++];
-                        }
-
-                        if (i == inputString.Length)
-                        {
-                            break;
                         }
                     }
                 }
@@ -76,10 +73,6 @@ namespace ConsoleCalculator.Converters
                         throw;
                     }
                 }
-                else if (inputString[i] == '(' || inputString[i] == ')')
-                {
-                    tmp = inputString[i++].ToString();
-                }
                 else
                 {
                     tmp = inputString[i++].ToString();
@@ -90,7 +83,7 @@ namespace ConsoleCalculator.Converters
                     }
                     if (OperationsManager.IsBitOperation(checkOp)
                         || OperationsManager.IsLogicOperation(checkOp)
-                        || OperationsManager.IsEqualOperation(checkOp))
+                        || OperationsManager.IsCompareOperation(checkOp))
                     {
                         tmp = checkOp;
                         i++;
